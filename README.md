@@ -2,7 +2,15 @@
 
 a cli to list, start and create issues in the [linear](https://linear.app/) issue tracker. git and [jj](https://www.jj-vcs.dev/) aware to keep you in the right views in linear. allows jumping to the web or the linear desktop app similar to `gh`.
 
-**works great with AI agents** — the CLI includes a [skill](#skills) that lets agents create issues, update status, and manage your Linear workflow alongside your code.
+**works great with AI agents**, just install a skill:
+
+```bash
+npx skills add injectivelabs/agent-skills/linear-cli
+
+# or #
+
+uvx upd-skill injectivelabs/linear-cli
+```
 
 here's how it works:
 
@@ -38,26 +46,26 @@ it aims to be a complement to the web and desktop apps that lets you stay on the
 
 ## install
 
-### homebrew
-
-```
-brew install schpet/tap/linear
-```
-
-### deno via jsr
+### npm
 
 ```bash
-deno install -A --reload -f -g -n linear jsr:@schpet/linear-cli
+npm install -g @injectivelabs/linear-cli
+```
+
+Uses a bundled Deno runtime via npm dependency (no global Deno required).
+
+```bash
+npx @injectivelabs/linear-cli
 ```
 
 ### binaries
 
-https://github.com/schpet/linear-cli/releases/latest
+<https://github.com/InjectiveLabs/linear-cli/releases/latest>
 
 ### local dev
 
 ```bash
-git clone https://github.com/schpet/linear-cli
+git clone https://github.com/InjectiveLabs/linear-cli
 cd linear-cli
 deno task install
 ```
@@ -223,43 +231,24 @@ the config file can be placed at (checked in order, first found is used):
 
 linear-cli includes a skill that helps AI agents use the CLI effectively. for use cases outside the CLI, it includes instructions to interact directly with the graphql api, including authentication.
 
-### claude code
-
-install the skill using [claude code's plugin system](https://code.claude.com/docs/en/skills):
-
-```bash
-# from claude code
-/plugin marketplace add schpet/linear-cli
-/plugin install linear-cli@linear-cli
-
-# from bash
-claude plugin marketplace add schpet/linear-cli
-claude plugin install linear-cli@linear-cli
-
-# to update
-claude plugin marketplace update linear-cli
-claude plugin update linear-cli@linear-cli
-```
-
-### skills.sh for other agents
+### skills for all agents
 
 install the skill using [skills.sh](https://skills.sh):
 
 ```bash
-npx skills add schpet/linear-cli
+npx skills add injectivelabs/agent-skills/linear-cli
 ```
 
-view the skill at [skills.sh/schpet/linear-cli/linear-cli](https://skills.sh/schpet/linear-cli/linear-cli)
+view the skill at [skills.sh/InjectiveLabs/agent-skills/linear-cli](https://skills.sh/InjectiveLabs/agent-skills/linear-cli)
 
-## why
+Alternative:
 
-linear's UI is incredibly good but it slows me down. i find the following pretty grating to experience frequently:
+```bash
+npx upd-skill injectivelabs/linear-cli
 
-- switching context from my repo to linear
-- not being on the right view when i open linear
-- linear suggests a git branch, but i have to do the work of creating or switching to that branch
-- linear's suggested git branch doesn't account for it already existing or having a merged pull request
+# or #
 
-this cli solves this. it knows what you're working on (via git branches or jj commit trailers), does the work of managing your version control state, and will write your pull request details for you.
+uvx upd-skill injectivelabs/linear-cli
+```
 
 [^1]: creating an API key requires member access, it is not available for guest accounts.

@@ -1,0 +1,35 @@
+{
+  "name": "@injectivelabs/linear-cli",
+  "version": "1.9.1-inj.1",
+  "description": "CLI to manage Linear issues, teams, and projects from the terminal.",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InjectiveLabs/linear-cli.git"
+  },
+  "homepage": "https://github.com/InjectiveLabs/linear-cli",
+  "bugs": {
+    "url": "https://github.com/InjectiveLabs/linear-cli/issues"
+  },
+  "type": "module",
+  "bin": {
+    "linear": "bin/linear.js"
+  },
+  "dependencies": {
+    "deno-bin": "^2.2.7"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "deno.json",
+    "deno.lock",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

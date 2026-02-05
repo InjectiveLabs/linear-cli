@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.9.1-inj.1] - 2026-02-05
+
+- Injective Labs fork of the tool. New distribution name `@injectivelabs/linear-cli`.
+
 ## [1.9.1] - 2026-01-29
 
 ### Fixed
@@ -12,11 +16,11 @@
 
 ### Fixed
 
-- Fix `--assignee self` to correctly resolve to current user ([#104](https://github.com/schpet/linear-cli/pull/104); thanks @JustTrott)
-- add pagination to `project list` command ([#109](https://github.com/schpet/linear-cli/pull/109); thanks @andrew-kline)
-- add pagination to `team list` command ([#107](https://github.com/schpet/linear-cli/pull/107); thanks @andrew-kline)
+- Fix `--assignee self` to correctly resolve to current user ([#104](https://github.com/InjectiveLabs/linear-cli/pull/104); thanks @JustTrott)
+- add pagination to `project list` command ([#109](https://github.com/InjectiveLabs/linear-cli/pull/109); thanks @andrew-kline)
+- add pagination to `team list` command ([#107](https://github.com/InjectiveLabs/linear-cli/pull/107); thanks @andrew-kline)
 - error when `--workspace` flag specifies unknown workspace
-- `--sort` flag now works correctly after interactive prompts ([#96](https://github.com/schpet/linear-cli/pull/96); thanks @paymog)
+- `--sort` flag now works correctly after interactive prompts ([#96](https://github.com/InjectiveLabs/linear-cli/pull/96); thanks @paymog)
 
 ### Added
 
@@ -26,7 +30,7 @@
 - `linear auth list` to show configured workspaces with org/user info
 - `linear auth default` to set the default workspace
 - global `-w, --workspace` flag to target a specific workspace by slug
-- `--project` filter for `issue list` command ([#94](https://github.com/schpet/linear-cli/pull/94); thanks @paymog)
+- `--project` filter for `issue list` command ([#94](https://github.com/InjectiveLabs/linear-cli/pull/94); thanks @paymog)
 
 ## [1.8.1] - 2026-01-23
 
@@ -42,14 +46,14 @@
 
 ### Added
 
-- global user config is now merged with project config (`~/.config/linear/linear.toml` on Unix, `%APPDATA%\linear\linear.toml` on Windows); project values override global, env vars override both ([#89](https://github.com/schpet/linear-cli/pull/89); thanks @kfrance)
-- requests now include a User-Agent header (schpet-linear-cli/VERSION)
-- initiative management commands (list, view, create, archive, unarchive, update, delete, add-project, remove-project) ([#95](https://github.com/schpet/linear-cli/pull/95); thanks @skgbafa)
-- label management commands (list, create, delete) ([#95](https://github.com/schpet/linear-cli/pull/95); thanks @skgbafa)
-- project create command with team, lead, dates, status, and initiative linking ([#95](https://github.com/schpet/linear-cli/pull/95); thanks @skgbafa)
-- team delete command ([#95](https://github.com/schpet/linear-cli/pull/95); thanks @skgbafa)
-- bulk operations support for issue delete (--bulk flag) ([#95](https://github.com/schpet/linear-cli/pull/95); thanks @skgbafa)
-- document management commands (list, view, create, update, delete) ([#95](https://github.com/schpet/linear-cli/pull/95); thanks @skgbafa)
+- global user config is now merged with project config (`~/.config/linear/linear.toml` on Unix, `%APPDATA%\linear\linear.toml` on Windows); project values override global, env vars override both ([#89](https://github.com/InjectiveLabs/linear-cli/pull/89); thanks @kfrance)
+- requests now include a User-Agent header (injectivelabs-linear-cli/VERSION)
+- initiative management commands (list, view, create, archive, unarchive, update, delete, add-project, remove-project) ([#95](https://github.com/InjectiveLabs/linear-cli/pull/95); thanks @skgbafa)
+- label management commands (list, create, delete) ([#95](https://github.com/InjectiveLabs/linear-cli/pull/95); thanks @skgbafa)
+- project create command with team, lead, dates, status, and initiative linking ([#95](https://github.com/InjectiveLabs/linear-cli/pull/95); thanks @skgbafa)
+- team delete command ([#95](https://github.com/InjectiveLabs/linear-cli/pull/95); thanks @skgbafa)
+- bulk operations support for issue delete (--bulk flag) ([#95](https://github.com/InjectiveLabs/linear-cli/pull/95); thanks @skgbafa)
+- document management commands (list, view, create, update, delete) ([#95](https://github.com/InjectiveLabs/linear-cli/pull/95); thanks @skgbafa)
 - auto-generate skill documentation from cli help output with deno task generate-skill-docs
 - file attachment support for issues and comments via `issue attach` command and `--attach` flag on `issue comment add`
 - attachments section in `issue view` output with automatic download to local cache
@@ -59,7 +63,7 @@
 
 ### Added
 
-- milestone management commands (list, create, update, delete, view) for Linear projects ([#92](https://github.com/schpet/linear-cli/pull/92); thanks @jholm117)
+- milestone management commands (list, create, update, delete, view) for Linear projects ([#92](https://github.com/InjectiveLabs/linear-cli/pull/92); thanks @jholm117)
 
 ### Fixed
 
@@ -69,7 +73,7 @@
 
 ### Added
 
-- add parent and sub-issues to issue view output ([#86](https://github.com/schpet/linear-cli/pull/86); thanks [@paymog](https://github.com/paymog))
+- add parent and sub-issues to issue view output ([#86](https://github.com/InjectiveLabs/linear-cli/pull/86); thanks [@paymog](https://github.com/paymog))
 
 ### Changed
 
@@ -116,8 +120,8 @@
 
 ### Added
 
-- issue comment commands: add, update, list ([#67](https://github.com/schpet/linear-cli/pull/67); thanks [@tallesborges](https://github.com/tallesborges))
-- add `--branch` option to issue start command ([#70](https://github.com/schpet/linear-cli/pull/70); thanks [@tallesborges](https://github.com/tallesborges))
+- issue comment commands: add, update, list ([#67](https://github.com/InjectiveLabs/linear-cli/pull/67); thanks [@tallesborges](https://github.com/tallesborges))
+- add `--branch` option to issue start command ([#70](https://github.com/InjectiveLabs/linear-cli/pull/70); thanks [@tallesborges](https://github.com/tallesborges))
 
 ## [1.2.1] - 2025-11-10
 
@@ -145,7 +149,7 @@
 
 ### Added
 
-- add from-ref option to issue start command to start an issue from a different git branch or ref ([#54](https://github.com/schpet/linear-cli/pull/54); thanks [@pianohacker](https://github.com/pianohacker))
+- add from-ref option to issue start command to start an issue from a different git branch or ref ([#54](https://github.com/InjectiveLabs/linear-cli/pull/54); thanks [@pianohacker](https://github.com/pianohacker))
 
 ### Fixed
 
@@ -247,7 +251,7 @@
 ### Added
 
 - test for JSON and HTML error response formatting
-- added `linear issue create` for creating issues with flags ([#30](https://github.com/schpet/linear-cli/pull/30); thanks [@maparent](https://github.com/maparent))
+- added `linear issue create` for creating issues with flags ([#30](https://github.com/InjectiveLabs/linear-cli/pull/30); thanks [@maparent](https://github.com/maparent))
 - added `linear issue create` interactive issue creation
 
 ### Changed
@@ -366,40 +370,40 @@
 - adds a -t, --title flag to the `issue pr` command, allowing you to provide a PR title that is different than linear's issue title
 - allows linear issue identifiers to be passed in as arguments to the issue commands as an alternative to parsing the branch name, e.g. `linear issue show ABC-123`
 
-[Unreleased]: https://github.com/schpet/linear-cli/compare/v1.9.1...HEAD
-[1.9.1]: https://github.com/schpet/linear-cli/compare/v1.9.0...v1.9.1
-[1.9.0]: https://github.com/schpet/linear-cli/compare/v1.8.1...v1.9.0
-[1.8.1]: https://github.com/schpet/linear-cli/compare/v1.8.0...v1.8.1
-[1.8.0]: https://github.com/schpet/linear-cli/compare/v1.7.0...v1.8.0
-[1.7.0]: https://github.com/schpet/linear-cli/compare/v1.6.0...v1.7.0
-[1.6.0]: https://github.com/schpet/linear-cli/compare/v1.5.0...v1.6.0
-[1.5.0]: https://github.com/schpet/linear-cli/compare/v1.4.0...v1.5.0
-[1.4.0]: https://github.com/schpet/linear-cli/compare/v1.3.1...v1.4.0
-[1.3.1]: https://github.com/schpet/linear-cli/compare/v1.3.0...v1.3.1
-[1.3.0]: https://github.com/schpet/linear-cli/compare/v1.2.1...v1.3.0
-[1.2.1]: https://github.com/schpet/linear-cli/compare/v1.2.0...v1.2.1
-[1.2.0]: https://github.com/schpet/linear-cli/compare/v1.1.1...v1.2.0
-[1.1.1]: https://github.com/schpet/linear-cli/compare/v1.1.0...v1.1.1
-[1.1.0]: https://github.com/schpet/linear-cli/compare/v1.0.1...v1.1.0
-[1.0.1]: https://github.com/schpet/linear-cli/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/schpet/linear-cli/compare/v0.6.4...v1.0.0
-[0.6.4]: https://github.com/schpet/linear-cli/compare/v0.6.3...v0.6.4
-[0.6.3]: https://github.com/schpet/linear-cli/compare/v0.6.2...v0.6.3
-[0.6.2]: https://github.com/schpet/linear-cli/compare/v0.6.1...v0.6.2
-[0.6.1]: https://github.com/schpet/linear-cli/compare/v0.6.0...v0.6.1
-[0.6.0]: https://github.com/schpet/linear-cli/compare/v0.5.7...v0.6.0
-[0.5.7]: https://github.com/schpet/linear-cli/compare/v0.5.6...v0.5.7
-[0.5.6]: https://github.com/schpet/linear-cli/compare/v0.5.5...v0.5.6
-[0.5.5]: https://github.com/schpet/linear-cli/compare/v0.5.3...v0.5.5
-[0.5.3]: https://github.com/schpet/linear-cli/compare/v0.5.2...v0.5.3
-[0.5.2]: https://github.com/schpet/linear-cli/compare/v0.5.1...v0.5.2
-[0.5.1]: https://github.com/schpet/linear-cli/compare/v0.5.0...v0.5.1
-[0.5.0]: https://github.com/schpet/linear-cli/compare/v0.4.1...v0.5.0
-[0.4.1]: https://github.com/schpet/linear-cli/compare/v0.4.0...v0.4.1
-[0.4.0]: https://github.com/schpet/linear-cli/compare/v0.3.2...v0.4.0
-[0.3.2]: https://github.com/schpet/linear-cli/compare/v0.3.1...v0.3.2
-[0.3.1]: https://github.com/schpet/linear-cli/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/schpet/linear-cli/compare/v0.2.1...v0.3.0
-[0.2.1]: https://github.com/schpet/linear-cli/compare/v0.2.0...v0.2.1
-[0.2.0]: https://github.com/schpet/linear-cli/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/schpet/linear-cli/releases/tag/v0.1.0
+[Unreleased]: https://github.com/InjectiveLabs/linear-cli/compare/v1.9.1...HEAD
+[1.9.1]: https://github.com/InjectiveLabs/linear-cli/compare/v1.9.0...v1.9.1
+[1.9.0]: https://github.com/InjectiveLabs/linear-cli/compare/v1.8.1...v1.9.0
+[1.8.1]: https://github.com/InjectiveLabs/linear-cli/compare/v1.8.0...v1.8.1
+[1.8.0]: https://github.com/InjectiveLabs/linear-cli/compare/v1.7.0...v1.8.0
+[1.7.0]: https://github.com/InjectiveLabs/linear-cli/compare/v1.6.0...v1.7.0
+[1.6.0]: https://github.com/InjectiveLabs/linear-cli/compare/v1.5.0...v1.6.0
+[1.5.0]: https://github.com/InjectiveLabs/linear-cli/compare/v1.4.0...v1.5.0
+[1.4.0]: https://github.com/InjectiveLabs/linear-cli/compare/v1.3.1...v1.4.0
+[1.3.1]: https://github.com/InjectiveLabs/linear-cli/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/InjectiveLabs/linear-cli/compare/v1.2.1...v1.3.0
+[1.2.1]: https://github.com/InjectiveLabs/linear-cli/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/InjectiveLabs/linear-cli/compare/v1.1.1...v1.2.0
+[1.1.1]: https://github.com/InjectiveLabs/linear-cli/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/InjectiveLabs/linear-cli/compare/v1.0.1...v1.1.0
+[1.0.1]: https://github.com/InjectiveLabs/linear-cli/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/InjectiveLabs/linear-cli/compare/v0.6.4...v1.0.0
+[0.6.4]: https://github.com/InjectiveLabs/linear-cli/compare/v0.6.3...v0.6.4
+[0.6.3]: https://github.com/InjectiveLabs/linear-cli/compare/v0.6.2...v0.6.3
+[0.6.2]: https://github.com/InjectiveLabs/linear-cli/compare/v0.6.1...v0.6.2
+[0.6.1]: https://github.com/InjectiveLabs/linear-cli/compare/v0.6.0...v0.6.1
+[0.6.0]: https://github.com/InjectiveLabs/linear-cli/compare/v0.5.7...v0.6.0
+[0.5.7]: https://github.com/InjectiveLabs/linear-cli/compare/v0.5.6...v0.5.7
+[0.5.6]: https://github.com/InjectiveLabs/linear-cli/compare/v0.5.5...v0.5.6
+[0.5.5]: https://github.com/InjectiveLabs/linear-cli/compare/v0.5.3...v0.5.5
+[0.5.3]: https://github.com/InjectiveLabs/linear-cli/compare/v0.5.2...v0.5.3
+[0.5.2]: https://github.com/InjectiveLabs/linear-cli/compare/v0.5.1...v0.5.2
+[0.5.1]: https://github.com/InjectiveLabs/linear-cli/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/InjectiveLabs/linear-cli/compare/v0.4.1...v0.5.0
+[0.4.1]: https://github.com/InjectiveLabs/linear-cli/compare/v0.4.0...v0.4.1
+[0.4.0]: https://github.com/InjectiveLabs/linear-cli/compare/v0.3.2...v0.4.0
+[0.3.2]: https://github.com/InjectiveLabs/linear-cli/compare/v0.3.1...v0.3.2
+[0.3.1]: https://github.com/InjectiveLabs/linear-cli/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/InjectiveLabs/linear-cli/compare/v0.2.1...v0.3.0
+[0.2.1]: https://github.com/InjectiveLabs/linear-cli/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/InjectiveLabs/linear-cli/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/InjectiveLabs/linear-cli/releases/tag/v0.1.0

@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json",
-  "name": "@schpet/linear-cli",
-  "version": "1.9.1",
+  "name": "@injectivelabs/linear-cli",
+  "version": "1.9.1-inj.1",
   "exports": "./src/main.ts",
-  "license": "MIT",
+  "license": "ISC",
   "tasks": {
     "dev": "deno task codegen && deno run --allow-all --quiet src/main.ts ",
     "install": "deno task codegen && deno install -c ./deno.json --allow-all --quiet -g -f -n linear ./src/main.ts",
@@ -50,14 +50,8 @@
     "valibot": "npm:valibot@^1.2.0"
   },
   "publish": {
-    "include": [
-      "src/",
-      "test/",
-      "README.md"
-    ],
-    "exclude": [
-      "!src/__codegen__/"
-    ]
+    "include": ["src/", "test/", "README.md"],
+    "exclude": ["!src/__codegen__/"]
   },
   "fmt": {
     "exclude": [
@@ -70,12 +64,8 @@
     "semiColons": false
   },
   "lint": {
-    "exclude": [
-      "__generated__/",
-      "src/__codegen__/"
-    ]
+    "exclude": ["__generated__/", "src/__codegen__/"]
   },
-  "unstable": [
-    "sloppy-imports"
-  ]
+  "unstable": ["sloppy-imports"],
+  "allowScripts": ["npm:deno-bin@2.2.7", "npm:lefthook@1.12.3"]
 }
