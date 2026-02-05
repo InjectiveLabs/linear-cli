@@ -112,6 +112,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       BUILD_MANIFEST_NAME: target/distrib/${{ join(matrix.targets, '-') }}-dist-manifest.json
+      DENO_NODE_MODULES_DIR: none
     steps:
       - name: enable windows longpaths
         run: |
@@ -130,7 +131,7 @@ jobs:
       - name: "Setup deno"
         uses: "denoland/setup-deno@v2"
         with:
-          "deno-version": "v2.x"
+          "deno-version": "latest"
       - name: "Generate GraphQL code"
         run: "deno task codegen"
       - name: Install dist

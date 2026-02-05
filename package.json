@@ -15,8 +15,9 @@
   "bin": {
     "linear": "bin/linear.js"
   },
-  "dependencies": {
-    "deno-bin": "^2.2.7"
+  "engines": {
+    "node": ">=18",
+    "deno": ">=2.0.0"
   },
   "files": [
     "bin/",
@@ -26,9 +27,6 @@
     "README.md",
     "LICENSE"
   ],
-  "engines": {
-    "node": ">=18"
-  },
   "publishConfig": {
     "access": "public"
   }

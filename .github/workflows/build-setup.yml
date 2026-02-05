@@ -1,0 +1,12 @@
+- name: Setup deno
+  uses: denoland/setup-deno@v2
+  with:
+    deno-version: latest
+- name: Cache Deno dependencies
+  run: deno cache --node-modules-dir=none npm:@graphql-codegen/cli/graphql-codegen-esm
+  env:
+    DENO_NODE_MODULES_DIR: none
+- name: Generate GraphQL code
+  run: deno task codegen
+  env:
+    DENO_NODE_MODULES_DIR: none

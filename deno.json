@@ -4,15 +4,16 @@
   "version": "1.9.1-inj.1",
   "exports": "./src/main.ts",
   "license": "ISC",
+  "nodeModulesDir": "none",
   "tasks": {
     "dev": "deno task codegen && deno run --allow-all --quiet src/main.ts ",
     "install": "deno task codegen && deno install -c ./deno.json --allow-all --quiet -g -f -n linear ./src/main.ts",
     "uninstall": "deno uninstall -g linear",
     "sync-schema": "deno task dev schema -o graphql/schema.graphql",
-    "codegen": "deno run --allow-all npm:@graphql-codegen/cli/graphql-codegen-esm",
-    "check": "deno check src/main.ts",
-    "test": "deno test --allow-all --quiet",
-    "snapshot": "deno test --allow-all -- --update",
+    "codegen": "deno run --allow-all --node-modules-dir=none npm:@graphql-codegen/cli/graphql-codegen-esm",
+    "check": "deno check --node-modules-dir=none src/main.ts",
+    "test": "deno test --allow-all --quiet --node-modules-dir=none",
+    "snapshot": "deno test --allow-all --node-modules-dir=none -- --update",
     "lefthook-install": "deno run --allow-run --allow-read --allow-write --allow-env npm:lefthook install",
     "validate": "deno task check && deno fmt && deno lint",
     "generate-skill-docs": "deno run --allow-run --allow-read --allow-write skills/linear-cli/scripts/generate-docs.ts"
@@ -56,7 +57,6 @@
   "fmt": {
     "exclude": [
       ".github/workflows/release.yml",
-      ".github/workflows/build-setup.yml",
       "__generated__/",
       "src/__codegen__/"
     ],

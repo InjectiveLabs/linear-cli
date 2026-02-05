@@ -20,6 +20,8 @@ build-command = [
 [dist]
 # The preferred dist version to use in CI (Cargo.toml SemVer syntax)
 cargo-dist-version = "0.30.2"
+# Extra steps to run before dist builds in GitHub Actions.
+github-build-setup = "build-setup.yml"
 # CI backends to support
 ci = "github"
 # The installers to generate for each app
