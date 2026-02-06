@@ -14,12 +14,16 @@ import { documentCommand } from "./commands/document/document.ts"
 import { configCommand } from "./commands/config.ts"
 import { schemaCommand } from "./commands/schema.ts"
 import { setCliWorkspace } from "./config.ts"
+import { configureJsonOutput, finalizeJsonOutput } from "./utils/json-output.ts"
 
 // Import config and credentials setup
 import "./config.ts"
 import "./credentials.ts"
 
-await new Command()
+const args = Deno.args
+const requestedJsonOutput = args.includes("--json") || args.includes("-j")
+
+const cli = new Command()
   .name("linear")
   .version(denoConfig.version)
   .description(
@@ -32,7 +36,9 @@ Environment Variables:
     "-w, --workspace <slug:string>",
     "Target workspace (uses credentials)",
   )
+  .globalOption("-j, --json", "Output as JSON")
   .globalAction((options) => {
+    configureJsonOutput(options.json)
     setCliWorkspace(options.workspace)
   })
   .action(() => {
@@ -59,4 +65,44 @@ Environment Variables:
   .command("completions", new CompletionsCommand())
   .command("config", configCommand)
   .command("schema", schemaCommand)
-  .parse(Deno.args)
+
+if (requestedJsonOutput) {
+  configureJsonOutput(true)
+  type ErrorConfigurableCommand = {
+    throwErrors(): void
+    getCommands(): ErrorConfigurableCommand[]
+  }
+
+  const enableThrowErrorsRecursively = (
+    command: ErrorConfigurableCommand,
+  ): void => {
+    command.throwErrors()
+    for (const subcommand of command.getCommands()) {
+      enableThrowErrorsRecursively(subcommand)
+    }
+  }
+  enableThrowErrorsRecursively(cli)
+}
+
+try {
+  await cli.parse(args)
+  finalizeJsonOutput({
+    ok: true,
+    argv: args,
+  })
+} catch (error) {
+  if (requestedJsonOutput) {
+    const message = error instanceof Error ? error.message : String(error)
+    finalizeJsonOutput({
+      ok: false,
+      argv: args,
+      error: {
+        type: "CliParseError",
+        message,
+      },
+    })
+    Deno.exit(2)
+  }
+
+  throw error
+}

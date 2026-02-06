@@ -7,6 +7,7 @@
 
 import { shouldShowSpinner } from "./hyperlink.ts"
 import { NotFoundError } from "./errors.ts"
+import { isJsonOutputEnabled } from "./json-output.ts"
 
 /**
  * Result of a single bulk operation
@@ -157,7 +158,7 @@ export async function executeBulkOperations<T extends BulkOperationResult>(
     batches.push(ids.slice(i, i + concurrency))
   }
 
-  const spinnerEnabled = shouldShowSpinner()
+  const spinnerEnabled = shouldShowSpinner() && !isJsonOutputEnabled()
 
   // Progress display helper
   const updateProgress = () => {

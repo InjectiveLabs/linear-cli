@@ -6,9 +6,14 @@ import { membersCommand } from "./team-members.ts"
 import { listCommand } from "./team-list.ts"
 import { createCommand } from "./team-create.ts"
 import { deleteCommand } from "./team-delete.ts"
+import { configureJsonOutput } from "../../utils/json-output.ts"
 
 export const teamCommand = new Command()
   .description("Manage Linear teams")
+  .globalOption("-j, --json", "Output as JSON")
+  .globalAction((options) => {
+    configureJsonOutput(options.json)
+  })
   .action(function () {
     this.showHelp()
   })

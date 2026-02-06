@@ -10,6 +10,7 @@
 
 import { ClientError } from "graphql-request"
 import { gray, red, setColorEnabled } from "@std/fmt/colors"
+import { finalizeJsonOutput, isJsonOutputEnabled } from "./json-output.ts"
 
 /**
  * Check if debug mode is enabled via LINEAR_DEBUG environment variable.
@@ -132,6 +133,11 @@ export function isClientError(error: unknown): error is ClientError {
  * In debug mode (LINEAR_DEBUG=1): Also shows the full error details
  */
 export function handleError(error: unknown, context?: string): never {
+  if (isJsonOutputEnabled()) {
+    printJsonError(error, context)
+    Deno.exit(1)
+  }
+
   setColorEnabled(Deno.stderr.isTerminal())
 
   if (error instanceof CliError) {
@@ -145,6 +151,72 @@ export function handleError(error: unknown, context?: string): never {
   }
 
   Deno.exit(1)
+}
+
+function printJsonError(error: unknown, context?: string): void {
+  if (error instanceof CliError) {
+    finalizeJsonOutput({
+      ok: false,
+      error: {
+        type: error.name,
+        message: error.userMessage,
+        context,
+        suggestion: error.suggestion,
+      },
+    })
+    return
+  }
+
+  if (isClientError(error)) {
+    const details: Record<string, unknown> = {}
+    if (error.response?.status != null) {
+      details.status = error.response.status
+    }
+    if (error.response?.errors != null) {
+      details.graphqlErrors = error.response.errors
+    }
+    if (error.request?.query != null) {
+      details.query = String(error.request.query).trim()
+    }
+    if (error.request?.variables != null) {
+      details.variables = error.request.variables
+    }
+
+    finalizeJsonOutput({
+      ok: false,
+      error: {
+        type: "GraphQLError",
+        message: extractGraphQLMessage(error),
+        context,
+        details: Object.keys(details).length > 0 ? details : undefined,
+      },
+    })
+    return
+  }
+
+  if (error instanceof Error) {
+    finalizeJsonOutput({
+      ok: false,
+      error: {
+        type: error.name || "Error",
+        message: error.message,
+        context,
+        details: isDebugMode() && error.stack
+          ? { stack: error.stack }
+          : undefined,
+      },
+    })
+    return
+  }
+
+  finalizeJsonOutput({
+    ok: false,
+    error: {
+      type: "UnknownError",
+      message: String(error),
+      context,
+    },
+  })
 }
 
 function printCliError(error: CliError, context?: string): void {

@@ -9,9 +9,14 @@ import { unarchiveCommand } from "./initiative-unarchive.ts"
 import { deleteCommand } from "./initiative-delete.ts"
 import { addProjectCommand } from "./initiative-add-project.ts"
 import { removeProjectCommand } from "./initiative-remove-project.ts"
+import { configureJsonOutput } from "../../utils/json-output.ts"
 
 export const initiativeCommand = new Command()
   .description("Manage Linear initiatives")
+  .globalOption("-j, --json", "Output as JSON")
+  .globalAction((options) => {
+    configureJsonOutput(options.json)
+  })
   .action(function () {
     this.showHelp()
   })

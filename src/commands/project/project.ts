@@ -2,9 +2,14 @@ import { Command } from "@cliffy/command"
 import { listCommand } from "./project-list.ts"
 import { viewCommand } from "./project-view.ts"
 import { createCommand } from "./project-create.ts"
+import { configureJsonOutput } from "../../utils/json-output.ts"
 
 export const projectCommand = new Command()
   .description("Manage Linear projects")
+  .globalOption("-j, --json", "Output as JSON")
+  .globalAction((options) => {
+    configureJsonOutput(options.json)
+  })
   .action(function () {
     this.showHelp()
   })

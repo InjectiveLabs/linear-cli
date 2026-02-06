@@ -14,9 +14,14 @@ import { titleCommand } from "./issue-title.ts"
 import { updateCommand } from "./issue-update.ts"
 import { urlCommand } from "./issue-url.ts"
 import { viewCommand } from "./issue-view.ts"
+import { configureJsonOutput } from "../../utils/json-output.ts"
 
 export const issueCommand = new Command()
   .description("Manage Linear issues")
+  .globalOption("-j, --json", "Output as JSON")
+  .globalAction((options) => {
+    configureJsonOutput(options.json)
+  })
   .action(function () {
     this.showHelp()
   })

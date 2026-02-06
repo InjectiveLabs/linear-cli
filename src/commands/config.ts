@@ -6,6 +6,7 @@ import { getGraphQLClient } from "../utils/graphql.ts"
 import { getDefaultWorkspace, getWorkspaces } from "../credentials.ts"
 import { getCliWorkspace, getOption, setCliWorkspace } from "../config.ts"
 import { AuthError, handleError, NotFoundError } from "../utils/errors.ts"
+import { configureJsonOutput } from "../utils/json-output.ts"
 
 const configQuery = gql(`
   query Config {
@@ -27,8 +28,10 @@ const configQuery = gql(`
 export const configCommand = new Command()
   .name("config")
   .description("Interactively generate .linear.toml configuration")
-  .action(async () => {
+  .option("-j, --json", "Output as JSON")
+  .action(async (options) => {
     try {
+      configureJsonOutput(options.json)
       console.log(`
 ██      ██ ███    ██ ███████  █████  ██████      ██████ ██      ██
 ██      ██ ████   ██ ██      ██   ██ ██   ██    ██      ██      ██

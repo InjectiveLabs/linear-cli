@@ -4,9 +4,14 @@ import { viewCommand } from "./milestone-view.ts"
 import { createCommand } from "./milestone-create.ts"
 import { updateCommand } from "./milestone-update.ts"
 import { deleteCommand } from "./milestone-delete.ts"
+import { configureJsonOutput } from "../../utils/json-output.ts"
 
 export const milestoneCommand = new Command()
   .description("Manage Linear project milestones")
+  .globalOption("-j, --json", "Output as JSON")
+  .globalAction((options) => {
+    configureJsonOutput(options.json)
+  })
   .action(function () {
     this.showHelp()
   })
