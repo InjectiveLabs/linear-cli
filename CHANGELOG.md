@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.9.1-inj.2] - 2026-02-06
+
+- linear team members --organization
+- linear issue update C-469 --unassign
+- linear issue update C-469 --assignee self
+
 ## [1.9.1-inj.1] - 2026-02-05
 
 - Injective Labs fork of the tool. New distribution name `@injectivelabs/linear-cli`.

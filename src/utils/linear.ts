@@ -3,6 +3,7 @@ import type {
   GetAllTeamsQuery,
   GetAllTeamsQueryVariables as _GetAllTeamsQueryVariables,
   GetIssuesForStateQuery,
+  GetOrganizationMembersQuery,
   GetTeamMembersQuery,
   IssueFilter,
   IssueSortInput,
@@ -846,6 +847,9 @@ export async function getTeamMembers(teamKey: string) {
             statusLabel
             guest
             isAssignable
+            admin
+            owner
+            isMe
           }
           pageInfo {
             hasNextPage
@@ -872,6 +876,72 @@ export async function getTeamMembers(teamKey: string) {
 
     hasNextPage = result.team.members.pageInfo.hasNextPage
     after = result.team.members.pageInfo.endCursor
+  }
+
+  return allMembers.sort((a, b) =>
+    a.displayName.toLowerCase().localeCompare(b.displayName.toLowerCase())
+  )
+}
+
+export async function getOrganizationMembers(includeDisabled = false) {
+  const client = getGraphQLClient()
+  const query = gql(/* GraphQL */ `
+    query GetOrganizationMembers(
+      $includeDisabled: Boolean
+      $first: Int
+      $after: String
+    ) {
+      viewer {
+        organization {
+          users(
+            includeDisabled: $includeDisabled
+            first: $first
+            after: $after
+          ) {
+            nodes {
+              id
+              name
+              displayName
+              email
+              active
+              initials
+              description
+              timezone
+              lastSeen
+              statusEmoji
+              statusLabel
+              guest
+              isAssignable
+              admin
+              owner
+              isMe
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  const allMembers = []
+  let hasNextPage = true
+  let after: string | null | undefined = undefined
+
+  while (hasNextPage) {
+    const result: GetOrganizationMembersQuery = await client.request(query, {
+      includeDisabled,
+      first: 100, // Fetch 100 members per page
+      after,
+    })
+
+    const members = result.viewer.organization.users.nodes
+    allMembers.push(...members)
+
+    hasNextPage = result.viewer.organization.users.pageInfo.hasNextPage
+    after = result.viewer.organization.users.pageInfo.endCursor
   }
 
   return allMembers.sort((a, b) =>

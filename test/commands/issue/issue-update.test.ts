@@ -156,3 +156,118 @@ await snapshotTest({
     }
   },
 })
+
+// Test unassigning an issue with explicit flag
+await snapshotTest({
+  name: "Issue Update Command - Unassign With Flag",
+  meta: import.meta,
+  colors: false,
+  args: [
+    "ENG-123",
+    "--unassign",
+  ],
+  denoArgs: commonDenoArgs,
+  async fn() {
+    const { cleanup } = await setupMockLinearServer([
+      // Mock response for getTeamIdByKey() - converting team key to ID
+      {
+        queryName: "GetTeamIdByKey",
+        variables: { team: "ENG" },
+        response: {
+          data: {
+            teams: {
+              nodes: [{ id: "team-eng-id" }],
+            },
+          },
+        },
+      },
+      // Mock response for the update issue mutation
+      {
+        queryName: "UpdateIssue",
+        variables: {
+          id: "ENG-123",
+          input: {
+            assigneeId: null,
+            teamId: "team-eng-id",
+          },
+        },
+        response: {
+          data: {
+            issueUpdate: {
+              success: true,
+              issue: {
+                id: "issue-existing-123",
+                identifier: "ENG-123",
+                url: "https://linear.app/test-team/issue/ENG-123/test-issue",
+                title: "Test Issue",
+              },
+            },
+          },
+        },
+      },
+    ], { LINEAR_TEAM_ID: "ENG" })
+
+    try {
+      await updateCommand.parse()
+    } finally {
+      await cleanup()
+    }
+  },
+})
+
+// Test using sentinel assignee values to unassign
+await snapshotTest({
+  name: "Issue Update Command - Unassign With Assignee Sentinel",
+  meta: import.meta,
+  colors: false,
+  args: [
+    "ENG-123",
+    "--assignee",
+    "unassigned",
+  ],
+  denoArgs: commonDenoArgs,
+  async fn() {
+    const { cleanup } = await setupMockLinearServer([
+      {
+        queryName: "GetTeamIdByKey",
+        variables: { team: "ENG" },
+        response: {
+          data: {
+            teams: {
+              nodes: [{ id: "team-eng-id" }],
+            },
+          },
+        },
+      },
+      {
+        queryName: "UpdateIssue",
+        variables: {
+          id: "ENG-123",
+          input: {
+            assigneeId: null,
+            teamId: "team-eng-id",
+          },
+        },
+        response: {
+          data: {
+            issueUpdate: {
+              success: true,
+              issue: {
+                id: "issue-existing-123",
+                identifier: "ENG-123",
+                url: "https://linear.app/test-team/issue/ENG-123/test-issue",
+                title: "Test Issue",
+              },
+            },
+          },
+        },
+      },
+    ], { LINEAR_TEAM_ID: "ENG" })
+
+    try {
+      await updateCommand.parse()
+    } finally {
+      await cleanup()
+    }
+  },
+})

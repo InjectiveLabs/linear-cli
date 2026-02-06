@@ -5,11 +5,15 @@ a cli to list, start and create issues in the [linear](https://linear.app/) issu
 **works great with AI agents**, just install a skill:
 
 ```bash
-npx skills add injectivelabs/agent-skills/linear-cli
+uvx upd-skill InjectiveLabs/linear-cli
 
-# or #
+# or install globally #
 
-uvx upd-skill injectivelabs/linear-cli
+uvx upd-skill InjectiveLabs/linear-cli --global
+
+# or via npx #
+
+npx skills add https://github.com/InjectiveLabs/agent-skills --skill linear-cli
 ```
 
 here's how it works:
@@ -122,6 +126,8 @@ linear issue start     # create/switch to issue branch and mark as started
 linear issue create    # create a new issue (interactive prompts)
 linear issue create -t "title" -d "description"  # create with flags
 linear issue update    # update an issue (interactive prompts)
+linear issue update ABC-123 --assignee self      # assign an issue
+linear issue update ABC-123 --unassign           # unassign an issue
 linear issue delete    # delete an issue
 linear issue comment list          # list comments on current issue
 linear issue comment add           # add a comment to current issue
@@ -136,6 +142,7 @@ linear issue commits               # show all commits for an issue (jj only)
 linear team list       # list teams
 linear team id         # print out the team id (e.g. for scripts)
 linear team members    # list team members
+linear team members --organization  # list all workspace/company members
 linear team create     # create a new team
 linear team autolinks  # configure GitHub repository autolinks for Linear issues
 ```
@@ -236,19 +243,21 @@ linear-cli includes a skill that helps AI agents use the CLI effectively. for us
 install the skill using [skills.sh](https://skills.sh):
 
 ```bash
-npx skills add injectivelabs/agent-skills/linear-cli
+uvx upd-skill InjectiveLabs/linear-cli
+```
+
+install globally:
+
+```bash
+uvx upd-skill InjectiveLabs/linear-cli --global
 ```
 
 view the skill at [skills.sh/InjectiveLabs/agent-skills/linear-cli](https://skills.sh/InjectiveLabs/agent-skills/linear-cli)
 
-Alternative:
+Alternative via npx:
 
 ```bash
-npx upd-skill injectivelabs/linear-cli
-
-# or #
-
-uvx upd-skill injectivelabs/linear-cli
+npx skills add https://github.com/InjectiveLabs/agent-skills --skill linear-cli
 ```
 
 [^1]: creating an API key requires member access, it is not available for guest accounts.

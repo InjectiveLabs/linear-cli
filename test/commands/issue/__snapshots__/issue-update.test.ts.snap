@@ -11,18 +11,20 @@ Description:
 
 Options:
 
-  -h, --help                        - Show this help.                                              
-  -a, --assignee     <assignee>     - Assign the issue to 'self' or someone (by username or name)  
-  --due-date         <dueDate>      - Due date of the issue                                        
-  -p, --parent       <parent>       - Parent issue (if any) as a team_number code                  
-  --priority         <priority>     - Priority of the issue (1-4, descending priority)             
-  --estimate         <estimate>     - Points estimate of the issue                                 
-  -d, --description  <description>  - Description of the issue                                     
-  -l, --label        <label>        - Issue label associated with the issue. May be repeated.      
-  --team             <team>         - Team associated with the issue (if not your default team)    
-  --project          <project>      - Name of the project with the issue                           
-  -s, --state        <state>        - Workflow state for the issue (by name or type)               
-  -t, --title        <title>        - Title of the issue                                           
+  -h, --help                        - Show this help.                                                                   
+  -a, --assignee     <assignee>     - Assign the issue to 'self' or someone (by username or name). Use 'unassigned' to  
+                                      clear.                                                                            
+  -u, --unassign                    - Remove the assignee from the issue                                                
+  --due-date         <dueDate>      - Due date of the issue                                                             
+  -p, --parent       <parent>       - Parent issue (if any) as a team_number code                                       
+  --priority         <priority>     - Priority of the issue (1-4, descending priority)                                  
+  --estimate         <estimate>     - Points estimate of the issue                                                      
+  -d, --description  <description>  - Description of the issue                                                          
+  -l, --label        <label>        - Issue label associated with the issue. May be repeated.                           
+  --team             <team>         - Team associated with the issue (if not your default team)                         
+  --project          <project>      - Name of the project with the issue                                                
+  -s, --state        <state>        - Workflow state for the issue (by name or type)                                    
+  -t, --title        <title>        - Title of the issue                                                                
 
 "
 stderr:
@@ -41,6 +43,28 @@ stderr:
 `;
 
 snapshot[`Issue Update Command - Case Insensitive Label Matching 1`] = `
+stdout:
+"Updating issue ENG-123
+
+✓ Updated issue ENG-123: Test Issue
+https://linear.app/test-team/issue/ENG-123/test-issue
+"
+stderr:
+""
+`;
+
+snapshot[`Issue Update Command - Unassign With Flag 1`] = `
+stdout:
+"Updating issue ENG-123
+
+✓ Updated issue ENG-123: Test Issue
+https://linear.app/test-team/issue/ENG-123/test-issue
+"
+stderr:
+""
+`;
+
+snapshot[`Issue Update Command - Unassign With Assignee Sentinel 1`] = `
 stdout:
 "Updating issue ENG-123
 

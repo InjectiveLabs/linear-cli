@@ -1,5 +1,6 @@
 import { Command } from "@cliffy/command"
 import { gql } from "../../__codegen__/gql.ts"
+import type { IssueUpdateInput } from "../../__codegen__/graphql.ts"
 import { getGraphQLClient } from "../../utils/graphql.ts"
 import {
   getIssueId,
@@ -23,8 +24,9 @@ export const updateCommand = new Command()
   .arguments("[issueId:string]")
   .option(
     "-a, --assignee <assignee:string>",
-    "Assign the issue to 'self' or someone (by username or name)",
+    "Assign the issue to 'self' or someone (by username or name). Use 'unassigned' to clear.",
   )
+  .option("-u, --unassign", "Remove the assignee from the issue")
   .option(
     "--due-date <dueDate:string>",
     "Due date of the issue",
@@ -67,6 +69,7 @@ export const updateCommand = new Command()
     async (
       {
         assignee,
+        unassign,
         dueDate,
         parent,
         priority,
@@ -89,6 +92,16 @@ export const updateCommand = new Command()
             {
               suggestion:
                 "Please provide an issue ID like 'ENG-123' or run from a branch with an issue ID.",
+            },
+          )
+        }
+
+        if (assignee !== undefined && unassign) {
+          throw new ValidationError(
+            "Cannot specify both --assignee and --unassign",
+            {
+              suggestion:
+                "Use --assignee <user> to assign, or --unassign to clear the assignee.",
             },
           )
         }
@@ -131,11 +144,26 @@ export const updateCommand = new Command()
           stateId = workflowState.id
         }
 
-        let assigneeId: string | undefined
-        if (assignee !== undefined) {
-          assigneeId = await lookupUserId(assignee)
-          if (!assigneeId) {
-            throw new NotFoundError("User", assignee)
+        let assigneeId: string | null | undefined
+        if (unassign) {
+          assigneeId = null
+        } else if (assignee !== undefined) {
+          const assigneeValue = assignee.trim()
+          const normalizedAssignee = assigneeValue.toLowerCase()
+          if (
+            normalizedAssignee === "unassigned" || normalizedAssignee ===
+              "none" ||
+            normalizedAssignee === "null"
+          ) {
+            assigneeId = null
+          } else {
+            assigneeId = await lookupUserId(assigneeValue)
+            if (assigneeId == null) {
+              throw new NotFoundError("User", assigneeValue, {
+                suggestion:
+                  "Use `linear team members --organization` to list assignable users.",
+              })
+            }
           }
         }
 
@@ -159,7 +187,7 @@ export const updateCommand = new Command()
         }
 
         // Build the update input object, only including fields that were provided
-        const input: Record<string, string | number | string[] | undefined> = {}
+        const input: IssueUpdateInput = {}
 
         if (title !== undefined) input.title = title
         if (assigneeId !== undefined) input.assigneeId = assigneeId

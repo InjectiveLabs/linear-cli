@@ -1,0 +1,52 @@
+export const snapshot = {};
+
+snapshot[`Team Members Command - Help Text 1`] = `
+stdout:
+"
+Usage: members [teamKey]
+
+Description:
+
+  List team members
+
+Options:
+
+  -h, --help          - Show this help.                                                    
+  -a, --all           - Include inactive members                                           
+  -o, --organization  - List all workspace members (company-wide) instead of team members  
+
+"
+stderr:
+""
+`;
+
+snapshot[`Team Members Command - Team Members Only Active By Default 1`] = `
+stdout:
+"Team Members (1):
+
+alice (Alice Johnson) [AJ]
+  Email: alice@example.com
+  Role: Engineering
+  Timezone: America/New_York
+
+"
+stderr:
+""
+`;
+
+snapshot[`Team Members Command - Organization Members 1`] = `
+stdout:
+"Workspace Members (2):
+
+alice (Alice Johnson) [AJ] (admin) (owner) (you)
+  Email: alice@example.com
+  Role: Staff Engineer
+  Timezone: America/New_York
+
+guest-user (External Guest) [EG] (inactive) (guest) (not assignable)
+  Email: guest@example.com
+
+"
+stderr:
+""
+`;
