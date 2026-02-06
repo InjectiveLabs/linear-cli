@@ -87,9 +87,22 @@ jobs:
       # (PRs run on the *source* but secrets are usually on the *target* -- that's *good*
       # but also really annoying to build CI around when it needs secrets to work right.)
       - id: plan
+        env:
+          IS_WORKFLOW_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
+          INPUT_TAG: ${{ inputs.tag }}
+          REF_NAME: ${{ github.ref_name }}
+          IS_PR: ${{ github.event.pull_request != null }}
         run: |
-          TAG="${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}"
-          dist ${{ ((github.event_name == 'workflow_dispatch' || !github.event.pull_request) && format('host --steps=create --tag={0}', TAG)) || 'plan' }} --output-format=json > plan-dist-manifest.json
+          if [[ "$IS_WORKFLOW_DISPATCH" == "true" ]]; then
+            # For manual triggers: plan with the specified tag to get build matrix
+            dist plan --tag="$INPUT_TAG" --output-format=json > plan-dist-manifest.json
+          elif [[ "$IS_PR" != "true" ]]; then
+            # For tag pushes: use host --steps=create
+            dist host --steps=create --tag="$REF_NAME" --output-format=json > plan-dist-manifest.json
+          else
+            # For PRs: just plan
+            dist plan --output-format=json > plan-dist-manifest.json
+          fi
           echo "dist ran successfully"
           cat plan-dist-manifest.json
           echo "manifest=$(jq -c "." plan-dist-manifest.json)" >> "$GITHUB_OUTPUT"
