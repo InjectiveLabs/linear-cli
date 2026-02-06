@@ -41,4 +41,4 @@ install-path = "CARGO_HOME"
 # Whether to install an updater program
 install-updater = true
 # Allow dirty CI - we modify release.yml for workflow_dispatch
-allow-dirty = true
+allow-dirty = ["ci"]
